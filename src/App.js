@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 
 class App extends Component {
+  // Model
   state = {
     user: {
       firstName: 'Alice',
@@ -9,6 +10,8 @@ class App extends Component {
       profileImageURL: 'https://randomuser.me/api/portraits/women/50.jpg'
     }
   }
+
+  // Controller actions
 
   // When user types in text field
   // This function is called
@@ -29,6 +32,8 @@ class App extends Component {
       }
     })
   }
+
+  // View
 
   render() {
     const user = this.state.user
