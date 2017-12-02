@@ -2,19 +2,25 @@ import React from 'react';
 import EditProfile from './EditProfile';
 import ShowProfile from './ShowProfile';
 
-const SwapButton = ( {onButtonClick, displayEdit, user, onChangeLast, onChangeFirst, onChangeImg, onChangeImgNum} ) => {
+const SwapButton = ( {onButtonClick, displayEdit, user, onChangeLast, onChangeFirst, onChangeImg, onChangeImgNum, randomOff,random} ) => {
+
+function onClick() {
+    onButtonClick();
+    randomOff();
+    console.log("onClick in Swap Button");
+}
 
     if(displayEdit === false){
           return(
               <div>
-                  <ShowProfile user = { user }/>
-                  <button onClick = {onButtonClick}> Show Edit </button>
+                  <ShowProfile user = { user } random = {random}/>
+                  <button onClick =  {()=> onClick()}> Show Edit </button>
               </div>
           )
     }else{
           return(
                 <div>
-                    <ShowProfile user = { user }/>
+                    <ShowProfile user = { user } random = {random}/>
                     <EditProfile
                       user = { user}
                       onChangeLast = {onChangeLast}
@@ -22,7 +28,7 @@ const SwapButton = ( {onButtonClick, displayEdit, user, onChangeLast, onChangeFi
                       onChangeImg = {onChangeImg}
                       onChangeImgNum = {onChangeImgNum}
                     />
-                    <button onClick = {onButtonClick}> Hide Edit </button>
+                    <button onClick = {()=> onClick()}> Hide Edit </button>
                 </div>
   )
       }

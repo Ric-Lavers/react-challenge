@@ -16,7 +16,8 @@ class App extends Component {
               profileImageURL: 'https://randomuser.me/api/portraits/women/50.jpg',
               imageNum: 50,
           },
-            displayEdit: false
+            displayEdit: false,
+            random: false
         };
         this.fetch = this.fetch.bind(this);
         console.log("state", this.state);
@@ -96,10 +97,17 @@ class App extends Component {
       })
     }
 
+    randomOff = () => {
+        this.setState( ()=>{
+            return {random: false}
+        });
+        console.log(this.setState.random);
+    }
+
 
     fetch = () => {
-        // var randomUser
-// THis is  a simplary error https://stackoverflow.com/questions/47601729/react-class-method-not-defined-no-undef
+        this.setState( ()=>{return {random: true}});
+        console.log(this.state.random);
         const randomUser = fetch('https://randomuser.me/api/')
             .then( (response) => {
                 if (response.status >= 400) {
@@ -112,14 +120,13 @@ class App extends Component {
             let newUserRaw = myJSON.results[0]
 
             var newUserData = {}
-            newUserData.profileImageURL = newUserRaw.picture.thumbnail;
+            newUserData.profileImageURL = newUserRaw.picture.large;
             newUserData.firstName = newUserRaw.name.first;
             newUserData.lastName = newUserRaw.name.last;
             function num(a){return a.match(/\d+/g)}
             newUserData.imageNum = num(newUserData.profileImageURL)
 
-            // newUser = JSON.stringify(myJSON)
-            console.log("INSIDE", newUserData);
+            // console.log("INSIDE", newUserData);
             this.setState((prevState) => {
               return {user: newUserData}
           });
@@ -144,8 +151,9 @@ class App extends Component {
 
   render() {
     const user = this.state.user
+    const random =  this.state.random
     const displayEditor = this.state.displayEdit
-    // console.log(this.fetch());
+    console.log("Random", this.state.random);
     // console.log(random);
 
     return (
@@ -159,6 +167,8 @@ class App extends Component {
             onChangeImg = {(event) => this.onChangeimage(event) }
             displayEdit = {displayEditor}
             onChangeImgNum = {(event) => this.onChangeImgNum(event)}
+            randomOff = {() => this.randomOff()}
+            random = {random}
         />
 
         <RandomUserButton onButtonClick = {() => this.fetch() }/>
